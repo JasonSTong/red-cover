@@ -119,7 +119,6 @@ public class OrderController {
             jsonObject.put("message","助力失败");
             return ResponseEntity.ok(jsonObject);
         }else {
-
             signService.updateSignCount(oneSignBySignTicket.getId(),oneSignBySignTicket.setSignCount(oneSignBySignTicket.getSignCount()+1));
         }
 
