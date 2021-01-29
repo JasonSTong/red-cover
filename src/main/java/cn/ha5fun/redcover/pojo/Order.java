@@ -25,6 +25,8 @@ public class Order implements Serializable {
     private Integer id;
     // 红包封面ID
     private Integer coverId;
+    //用户名
+    private String nickname;
     // 用户ID
     private String ticket;
     // 用户邀请好友次数

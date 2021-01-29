@@ -36,11 +36,11 @@ public class OrderController {
     @Autowired
     SignService signService;
     @PostMapping("createOrder")
-    public ResponseEntity<Object> createOrder(int coverId,String ticket){
+    public ResponseEntity<Object> createOrder(int coverId,String ticket,String nickname){
         JSONObject jsonObject = new JSONObject();
         // 查找该封面获取需求
         RedCover oneRedCover = redCoverService.getOneRedCover(coverId);
-        List<Order> orders = orderService.selOrderByTicket(coverId,ticket);
+        List<Order> orders = orderService.selOrderByTicket(coverId,ticket,nickname);
         System.out.println(orders.size());
         if (orders.size() != 0) {
             jsonObject.put("code",50002);
@@ -55,6 +55,7 @@ public class OrderController {
         // new Order对象
         Order order = new Order();
         order.setCoverId(coverId)
+                .setNickname(nickname)
                 .setTicket(ticket)
                 .setLookVideoLockNum(0)
                 .setInviteLockNum(0)
@@ -80,7 +81,7 @@ public class OrderController {
     }
 
     @GetMapping("getOneOrder")
-    public ResponseEntity<JSONObject> getOneOrder(int coverId,int orderId,String ticket){
+    public ResponseEntity<JSONObject> getOneOrder(int coverId,int orderId,String ticket,String nickname){
         JSONObject jsonObject = new JSONObject();
         Order order = orderService.selOneOrder(orderId);
         System.out.println(coverId+"xx"+orderId+"xx"+ticket);
@@ -90,9 +91,11 @@ public class OrderController {
             jsonObject.put("message","订单不存在");
             return ResponseEntity.ok(jsonObject);
         }
-        List<Order> orders = orderService.selOrderByTicket(coverId, ticket);
+        List<Order> orders = orderService.selOrderByTicket(coverId, ticket,nickname);
         if (orders.size() != 0) {
             for (Order getOrder : orders) {
+                if(redCoverService.getOneRedCover(getOrder.getCoverId()).getInviteLockNum() <= getOrder.getInviteLockNum())
+                    getOrder.setIsReceive(true);
                 jsonObject.put("orderData", getOrder);
             }
             jsonObject.put("code",50200);
@@ -123,7 +126,12 @@ public class OrderController {
         }
 
         Order order = orderService.selOneOrder(orderId);
-        if(orderService.updateOrderByInvite(order.getId(), order.setInviteLockNum(order.getInviteLockNum()+1))){
+        RedCover oneRedCover = redCoverService.getOneRedCover(order.getCoverId());
+        order.setInviteLockNum(order.getInviteLockNum()+1);
+
+        if(oneRedCover.getInviteLockNum() <= order.getInviteLockNum())
+            order.setIsReceive(true);
+        if(orderService.updateOrderByInvite(order.getId(), order)){
             jsonObject.put("code",60200);
             jsonObject.put("message","助力成功");
         }

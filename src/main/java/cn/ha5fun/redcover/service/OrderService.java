@@ -25,10 +25,11 @@ public class OrderService {
         return orderMapper.insert(order) > 0;
     }
     // 根据要求查询订单
-    public List<Order> selOrderByTicket(int coverId, String ticket){
+    public List<Order> selOrderByTicket(int coverId, String ticket,String nickname){
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
         orderQueryWrapper.eq("ticket",ticket);
         orderQueryWrapper.eq("cover_id",coverId);
+        orderQueryWrapper.eq("nickname",nickname);
         return orderMapper.selectList(orderQueryWrapper);
     }
     // 根据ID 查询订单
