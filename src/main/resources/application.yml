@@ -8,8 +8,8 @@ spring:
       enabled: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/redcover?useUnicode=true&characterEncoding=UTF8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: root
+    url: jdbc:mysql://rm-bp11ze9wvc5oqf3ov9o.mysql.rds.aliyuncs.com:3306/redcover?useUnicode=true&characterEncoding=UTF8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root_chen
     password: Ct981228
     hikari:
       # 连接池名
