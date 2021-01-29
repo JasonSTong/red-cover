@@ -1,16 +1,12 @@
 package cn.ha5fun.redcover.service;
 
 import cn.ha5fun.redcover.mapper.OrderMapper;
-import cn.ha5fun.redcover.mapper.RedCoverMapper;
 import cn.ha5fun.redcover.pojo.Order;
-import cn.ha5fun.redcover.pojo.RedCover;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.sun.tools.corba.se.idl.constExpr.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
