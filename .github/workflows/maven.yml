@@ -81,10 +81,10 @@ jobs:
       - name: Push Docker
         run: |
           docker login --username=18690432061 --password 123.qwe123 registry.cn-hangzhou.aliyuncs.com
-          docker build . -t registry.cn-hangzhou.aliyuncs.com/seckill_demo/seckill:$GITHUB_RUN_NUMBER
-          docker push registry.cn-hangzhou.aliyuncs.com/seckill_demo/seckill:$GITHUB_RUN_NUMBER
-          docker tag $(docker images registry.cn-hangzhou.aliyuncs.com/seckill_demo/seckill:$GITHUB_RUN_NUMBER -q) registry.cn-hangzhou.aliyuncs.com/seckill_demo/seckill:latest
-          docker push registry.cn-hangzhou.aliyuncs.com/seckill_demo/seckill:latest
+          docker build . -t registry.cn-hangzhou.aliyuncs.com/red_cover/red_cover:$GITHUB_RUN_NUMBER
+          docker push registry.cn-hangzhou.aliyuncs.com/red_cover/red_cover:$GITHUB_RUN_NUMBER
+          docker tag $(docker images registry.cn-hangzhou.aliyuncs.com/red_cover/red_cover:$GITHUB_RUN_NUMBER -q) registry.cn-hangzhou.aliyuncs.com/red_cover/red_cover:latest
+          docker push registry.cn-hangzhou.aliyuncs.com/red_cover/red_cover:latest
 
 
 
@@ -102,12 +102,12 @@ jobs:
           password: Ct981228
           port: 22
           script: |
-            docker stop $(docker ps --filter ancestor=registry.cn-hangzhou.aliyuncs.com/seckill_demo/seckill -q)
-            docker rm -f $(docker ps -a --filter ancestor=registry.cn-hangzhou.aliyuncs.com/seckill_demo/seckill:latest -q)
-            docker rmi -f $(docker images registry.cn-hangzhou.aliyuncs.com/seckill_demo/seckill:latest -q)
+            docker stop $(docker ps --filter ancestor=registry.cn-hangzhou.aliyuncs.com/red_cover/red_cover -q)
+            docker rm -f $(docker ps -a --filter ancestor=registry.cn-hangzhou.aliyuncs.com/red_cover/red_cover:latest -q)
+            docker rmi -f $(docker images registry.cn-hangzhou.aliyuncs.com/red_cover/red_cover:latest -q)
             docker login --username=18690432061 --password 123.qwe123 registry.cn-hangzhou.aliyuncs.com
-            docker pull registry.cn-hangzhou.aliyuncs.com/seckill_demo/seckill:latest
-            docker run -d -p 8181:8181 registry.cn-hangzhou.aliyuncs.com/seckill_demo/seckill:latest
+            docker pull registry.cn-hangzhou.aliyuncs.com/red_cover/red_cover:latest
+            docker run -d -p 8181:8181 registry.cn-hangzhou.aliyuncs.com/red_cover/red_cover:latest
 
 # 上面暴露出了 8060端口, 填你项目端口即可 (没有端口可忽略)
 
