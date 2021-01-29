@@ -70,11 +70,11 @@ public class OrderController {
         if(isCreate){
             jsonObject.put("code",200);
             jsonObject.put("message","创建订单成功");
-            jsonObject.put("data",order);
+            jsonObject.put("orderData",order);
         }else {
             jsonObject.put("code",50001);
             jsonObject.put("message","创建订单失败");
-            jsonObject.put("data",null);
+            jsonObject.put("orderData",null);
         }
         return ResponseEntity.ok(jsonObject);
     }
