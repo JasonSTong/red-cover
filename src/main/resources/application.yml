@@ -1,7 +1,7 @@
 server:
   tomcat:
     uri-encoding: UTF-8
-  port: 8181
+  port: 443
 spring:
   devtools:
     restart:
@@ -11,6 +11,9 @@ spring:
     url: jdbc:mysql://rm-bp11ze9wvc5oqf3ov125010.mysql.rds.aliyuncs.com:3306/redcover?useUnicode=true&characterEncoding=UTF8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root_chen
     password: Ct981228
+#    url: jdbc:mysql://localhost:3306/redcover?useUnicode=true&characterEncoding=UTF8&useSSL=false&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: Ct981228
     hikari:
       # 连接池名
       pool-name: HikariCP

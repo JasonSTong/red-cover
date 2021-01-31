@@ -59,7 +59,8 @@ public class OrderController {
                 .setTicket(ticket)
                 .setLookVideoLockNum(0)
                 .setInviteLockNum(0)
-                .setFree(oneRedCover.getIsFree());
+                .setFree(oneRedCover.getIsFree())
+                .setHasReceive(false);
         if (oneRedCover.getIsFree()){
             order.setIsReceive(true);
         }else{
@@ -135,6 +136,28 @@ public class OrderController {
             jsonObject.put("code",60200);
             jsonObject.put("message","助力成功");
         }
+        return ResponseEntity.ok(jsonObject);
+    }
+
+    @PostMapping("/checkHasReceive")
+    public ResponseEntity<JSONObject> checkHasReceive(int orderId , String ticket){
+        JSONObject jsonObject = new JSONObject();
+        Order order = orderService.selOneOrder(orderId);
+        if (!order.getTicket().equals(ticket)){
+            jsonObject.put("code",70400);
+            jsonObject.put("message","订单或用户不存在");
+        }else if (order.getHasReceive()){
+            jsonObject.put("code",70500);
+            jsonObject.put("message","订单已领取过");
+        }else if (!order.getIsReceive()){
+            jsonObject.put("code",70501);
+            jsonObject.put("message","订单未完成任务");
+        }else {
+            orderService.updateOrderByInvite(orderId, order.setHasReceive(true));
+            jsonObject.put("code",70202);
+            jsonObject.put("message","成功领取");
+        }
+        jsonObject.put("data", order);
         return ResponseEntity.ok(jsonObject);
     }
 }

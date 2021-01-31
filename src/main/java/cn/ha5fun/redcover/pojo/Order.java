@@ -37,4 +37,6 @@ public class Order implements Serializable {
     private boolean isFree;
     // 用户是否有资格领取
     private Boolean isReceive;
+    // 查看用户是否领取
+    private Boolean hasReceive;
 }
