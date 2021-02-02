@@ -2,6 +2,7 @@ package cn.ha5fun.redcover.service;
 
 import cn.ha5fun.redcover.mapper.RedCoverMapper;
 import cn.ha5fun.redcover.pojo.RedCover;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,9 @@ public class RedCoverService {
     RedCoverMapper redCoverMapper;
     // 查询所有红包封面
     public List<RedCover> getRedCoverList(){
-
-        return redCoverMapper.selectList(null);
+        QueryWrapper<RedCover> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("deleted",false);
+        return redCoverMapper.selectList(queryWrapper);
     }
     // 查询一个红包封面
     public RedCover getOneRedCover(Integer id){

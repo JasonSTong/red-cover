@@ -109,7 +109,7 @@ jobs:
             docker pull registry.cn-hangzhou.aliyuncs.com/red_cover/red_cover:latest
             docker run -d -p 443:443 registry.cn-hangzhou.aliyuncs.com/red_cover/red_cover:latest
 
-# 上面暴露出了 8060端口, 填你项目端口即可 (没有端口可忽略)
+# 上面暴露出了 443端口, 填你项目端口即可 (没有端口可忽略)
 
 
 

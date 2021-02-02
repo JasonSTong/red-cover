@@ -9,22 +9,18 @@ import lombok.experimental.Accessors;
 /**
  * @author chen
  * @Company ha5fun.com
- * @Description 用户表
- * @Date 2021/1/27 3:50 下午
+ * @Description 邀请服务
+ * @Date 2021/2/2 3:23 下午
  * @Version 1.0.0
  */
 @Data
-@TableName("user_")
 @Accessors( chain = true )
-public class User {
+@TableName(value = "invite_")
+public class Invite {
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
-    private String nickname;
-    private String avatarUrl;
-    private String city;
-    private String country;
-    private Integer gender;
-    private String language;
-    private String province;
+    private Integer userId;
     private String ticket;
+    private Integer invite_user_id;
+    private String date;
 }

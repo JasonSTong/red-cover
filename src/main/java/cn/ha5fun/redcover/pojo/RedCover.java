@@ -1,5 +1,7 @@
 package cn.ha5fun.redcover.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -16,11 +18,14 @@ import java.io.Serializable;
 @TableName(value = "red_cover")
 public class RedCover implements Serializable {
     private static final long serialVersionUID = -2831789142241786607L;
+    @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
     // 红包封面Url
     private String redCoverUrl;
     // 领取方式 信息
     private String getDesc;
+    //是否删除
+    private boolean deleted;
     // 限制 分享好友数领取
     private Integer inviteLockNum;
     // 限制 观看视频 数量

@@ -25,12 +25,8 @@ public class WeChatService {
      * @param code
      * @return 返回状态码
      */
-    public JSONObject wxLogin(String code){
-
-        JSONObject result = new JSONObject();
-        result.put("status",200);
-
-
+    public String wxLogin(String code){
+        String ticket = "";
         String appId = "wx9a886bd40e8fb753";
         String secret = "0aa9f444dedb0c52cc4e0d7a70c428be";
         String url = "https://api.weixin.qq.com/sns/jscode2session?"
@@ -43,14 +39,14 @@ public class WeChatService {
         //判断返回的json字符串是否有errorcode
         System.out.println(jsonData);
         if(StringUtils.contains(jsonData,"errcode")){
-            result.put("status",500);
-            result.put("msg","登陆失败");
-            return result;
+
+            return "error";
         }
+        // 转为Object
         JSONObject jsonDataObject = JSONObject.parseObject(jsonData);
         String md5Key = DigestUtils.md5Hex(jsonDataObject.get("openid")+"EASY_WORK_LOGIN");
-        result.put("ticket","ha5fun_"+md5Key);
-        return result;
+
+        return "ha5fun_"+md5Key;
     }
 
 

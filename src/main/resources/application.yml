@@ -1,7 +1,17 @@
 server:
   tomcat:
     uri-encoding: UTF-8
+#  port: 8181
+  ssl:
+    enabled: true
+    key-store-password: 26cve767fpfotp7
+    key-store: classpath:www.ha5fun.cn.jks
+    key-store-type: JKS
   port: 443
+condition:
+  http2Https: true
+http:
+  port: 80
 spring:
   devtools:
     restart:
