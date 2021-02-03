@@ -20,7 +20,6 @@ public class FakeMessageService {
     FakeMessageMapper fakeMessageMapper;
 
     public boolean addFakeMessage(String username ,String time){
-
         return 0 != fakeMessageMapper.insert(new FakeMessage().setTime(time).setUsername(username)  );
     }
     public List<FakeMessage> getAllFakeMessage(){
