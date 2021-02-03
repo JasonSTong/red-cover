@@ -42,10 +42,11 @@ public class OrderService {
         updateWrapper.eq("id",id);
         return orderMapper.update(order,updateWrapper)>0;
     }
+
     // 修改订单
-    public boolean updateOrderByLookVideo(Order order){
+    public boolean updateOrderByLookVideo(int id ,Order order){
         UpdateWrapper<Order> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("look_video_lockNum",order.getLookVideoLockNum()+1);
+        updateWrapper.eq("id",id);
         return orderMapper.update(order,updateWrapper)>0;
     }
     // 更改是否可以领取条件

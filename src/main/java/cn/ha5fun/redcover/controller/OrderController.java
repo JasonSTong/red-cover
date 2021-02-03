@@ -35,7 +35,7 @@ public class OrderController {
     MD5Utils md5Utils;
     @Autowired
     SignService signService;
-    @PostMapping("createOrder")
+    @PostMapping("/createOrder")
     public ResponseEntity<Object> createOrder(int coverId,String ticket,String nickname){
         JSONObject jsonObject = new JSONObject();
         // 查找该封面获取需求
@@ -81,7 +81,7 @@ public class OrderController {
         return ResponseEntity.ok(jsonObject);
     }
 
-    @GetMapping("getOneOrder")
+    @GetMapping("/getOneOrder")
     public ResponseEntity<JSONObject> getOneOrder(int coverId,int orderId,String ticket,String nickname){
         JSONObject jsonObject = new JSONObject();
         Order order = orderService.selOneOrder(orderId);
@@ -95,8 +95,10 @@ public class OrderController {
         List<Order> orders = orderService.selOrderByTicket(coverId, ticket,nickname);
         if (orders.size() != 0) {
             for (Order getOrder : orders) {
-                if(redCoverService.getOneRedCover(getOrder.getCoverId()).getInviteLockNum() <= getOrder.getInviteLockNum())
+                RedCover oneRedCover = redCoverService.getOneRedCover(getOrder.getCoverId());
+                if(oneRedCover.getInviteLockNum() <= getOrder.getInviteLockNum() && oneRedCover.getLookVideoLockNum() <= getOrder.getLookVideoLockNum()){
                     getOrder.setIsReceive(true);
+                }
                 jsonObject.put("orderData", getOrder);
             }
             jsonObject.put("code",50200);
@@ -130,11 +132,36 @@ public class OrderController {
         RedCover oneRedCover = redCoverService.getOneRedCover(order.getCoverId());
         order.setInviteLockNum(order.getInviteLockNum()+1);
 
-        if(oneRedCover.getInviteLockNum() <= order.getInviteLockNum())
+        if(oneRedCover.getInviteLockNum() <= order.getInviteLockNum() && oneRedCover.getLookVideoLockNum() <= order.getLookVideoLockNum())
             order.setIsReceive(true);
         if(orderService.updateOrderByInvite(order.getId(), order)){
             jsonObject.put("code",60200);
             jsonObject.put("message","助力成功");
+        }
+        return ResponseEntity.ok(jsonObject);
+    }
+
+    @PostMapping("/updateLookVideoLockNum")
+    public ResponseEntity<JSONObject> updateLookVideoLockNum(int orderId){
+        JSONObject jsonObject = new JSONObject();
+        System.out.println("========================================================");
+        System.out.println(orderId);
+        System.out.println("========================================================");
+        Order order = orderService.selOneOrder(orderId);
+        RedCover oneRedCover = redCoverService.getOneRedCover(order.getCoverId());
+        order.setLookVideoLockNum(order.getLookVideoLockNum()+1);
+
+        if(oneRedCover.getLookVideoLockNum() <= order.getLookVideoLockNum() && oneRedCover.getInviteLockNum() <= order.getInviteLockNum())
+            order.setIsReceive(true);
+        boolean isSuccess = orderService.updateOrderByLookVideo(order.getId(), order);
+        if(isSuccess){
+            jsonObject.put("code",60300);
+            jsonObject.put("orderData",order.setLookVideoLockNum(order.getLookVideoLockNum()));
+            jsonObject.put("message","观看视频成功");
+        }else{
+            jsonObject.put("code",60400);
+            jsonObject.put("orderData",order);
+            jsonObject.put("message","观看视频失败");
         }
         return ResponseEntity.ok(jsonObject);
     }
